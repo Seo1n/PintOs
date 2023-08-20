@@ -64,7 +64,7 @@ vm_alloc_page_with_initializer (enum vm_type type, void *upage, bool writable,
 		struct page * page = (struct page*)malloc(sizeof(struct page)) ;
 		bool (*initializer)(struct page *, enum vm_type, void *) ; 
 
-		switch (VM_TYPE(type)) { //타입에 맞는 초기화 함수 지정
+		switch (VM_TYPE(type)) { 
 			case VM_ANON :
 				initializer = anon_initializer;
 				break;
@@ -189,7 +189,7 @@ bool
 vm_try_handle_fault (struct intr_frame *f UNUSED, void *addr UNUSED,
 		bool user UNUSED, bool write UNUSED, bool not_present UNUSED) {
 	struct supplemental_page_table *spt UNUSED = &thread_current ()->spt;
-	void *page_addr = pg_round_down(addr); // 페이지 사이즈로 내려서 spt_find 해야 하기 때문 
+	void *page_addr = pg_round_down(addr); 
 	uint64_t addr_v = (uint64_t)addr;
 	struct page *page = spt_find_page(spt, page_addr);
 	uint64_t MAX_STACK = USER_STACK - (1<<20);
